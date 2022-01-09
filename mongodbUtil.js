@@ -1,24 +1,19 @@
 const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://smit1010:"+process.env.MONGODB_PASSWORD+"@cluster0.u7uth.mongodb.net/Shopify-Inventory?retryWrites=true&w=majority";
 
-let collection = null;
+let database = null;
+
 
 module.exports = {
   getConnection: new Promise((resolve, reject) => {
     
-    if (collection) resolve(collection)
+    if (database) resolve(database)
     
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-    client.connect(err => {
-      if (err) {
-        console.error('Error in connecting to the database: ', err)
-        reject(err);
-        process.exit(1);
-      }
-
+    MongoClient.connect(uri, function(err, db) {
+      if (err) throw err;
+      database = db.db("Shopify-Inventory");
       console.log('Connected to database successfully')
-      collection = client.db('Shopify-Inventory').collections("Products");
-      resolve(collection)
+      resolve(database)
     });
   }),
 
