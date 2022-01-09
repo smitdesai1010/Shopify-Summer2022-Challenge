@@ -10,43 +10,68 @@ module.exports = {
             products = [products]
         }
 
-        for (let index = 0; index < products.length; ++index) {
-            const validate = ajv.compile(mongodbUtil.addDocumentSchema)
-            const valid = validate(products[index])
-
-            if (!valid) { 
-                let errMsg = 'Product at index ' + index + ' is invalid: ' + validate.errors[0].message + '\nNo entries inserted into the database'
-                console.error(errMsg)
-                res.status(400).send(errMsg)
-                return;
-            }
-
-            //renaming productID to the default unique key to automatically handle duplicate insertions 
-            products[index]._id = products[index].productID
-            delete products[index]["productID"]
-        }
+        let invalidFormat = []
+        let insertedEntries = [];
+        let duplicateInsertion = [];
+        let cannotInsert = [];
+        let reqProcessed = products.length;
 
         //Get Mongodb connection and add the products
         mongodbUtil.getConnection 
         .then (db => {
-            db.collection("Products").insertMany(products, (error, response) => {
-                if (error) {
-                    if (error.code == 11000) {
-                        let errMsg = "Duplicate entry on productID: " + JSON.stringify(error.writeErrors[0].err.op) + '\nFollow up product details are not inserted into the database'
-                        console.log(errMsg)
-                        res.status(409).send(errMsg)
+            for (let index = 0; index < products.length; ++index) {
+                const validate = ajv.compile(mongodbUtil.addDocumentSchema)
+                const valid = validate(products[index])
+
+                if (!valid) { 
+                    invalidFormat.push({
+                        _id: products[index].productID,
+                        errMsg: 'Product at index ' + index + ' is invalid: ' + validate.errors[0].message
+                    })
+                    --reqProcessed;
+                    if (reqProcessed == 0) {  //all callbacks have invoked
+                        let msg = {
+                            "updated": updated,
+                            "notFound": notFound,
+                            "cannotUpdate": cannotUpdate,
+                            "invalidFormat": invalidFormat
+                        };
+                
+                        console.log(msg)
+                        res.status(400).send(msg);
                     }
-    
-                    else {
-                        res.status(400).send('Unable to insert into Database, please try again later')
+
+                    continue;
+                }
+
+                //renaming productID to the default unique key to automatically handle duplicate insertions 
+                products[index]._id = products[index].productID
+                delete products[index]["productID"]
+            
+                db.collection("Products").insertOne(products[index], (error, response) => {
+                    if (error) {
+                        if (error.code == 11000) duplicateInsertion.push(products[index]._id)
+                        else cannotInsert.push(products[index]._id)
                     }
-                }
+        
+                    else insertedEntries.push(products[index]._id)
     
-                else {
-                    console.log("Document inserted");
-                    res.sendStatus(200)
-                }
-            });    
+                    --reqProcessed
+    
+                    if (reqProcessed == 0) {
+                        let msg = {
+                            "inserted": insertedEntries,
+                            "cannotInsert": cannotInsert,
+                            "duplicateInsertion": duplicateInsertion,
+                            "invalidFormat": invalidFormat
+                        }
+    
+                        console.log(msg)
+                        res.status(200).send(msg)
+                    }
+                });    
+            
+            }
         })   
 
     }

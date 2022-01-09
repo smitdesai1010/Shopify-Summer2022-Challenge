@@ -10,34 +10,72 @@ module.exports = {
             products = [products]
         }
 
-        for (let index = 0; index < products.length; ++index) {
-            const validate = ajv.compile(mongodbUtil.updateDocumentSchema)
-            const valid = validate(products[index])
+        let invalidFormat = []
+        let updated = [];
+        let notFound = [];
+        let cannotUpdate = [];
+        let reqProcessed = products.length;
 
-            if (!valid) { 
-                let errMsg = 'Product at index ' + index + ' is invalid: ' + validate.errors[0].message + '\nNo entries inserted into the database'
-                console.error(errMsg)
-                res.status(400).send(errMsg)
-                return;
-            }
 
-            //renaming productID to the default unique key to automatically handle duplicate insertions 
-            let query = { _id: products[index].productID } 
-            delete products[index]["productID"]
-            
-            newVal = { $set: products[index] }
+        mongodbUtil.getConnection  
+        .then (db => {
 
-            mongodbUtil.getConnection 
-            .then (db => {
+            for (let index = 0; index < products.length; ++index) {
+
+                const validate = ajv.compile(mongodbUtil.updateDocumentSchema)
+                const valid = validate(products[index])
+
+                //If not valid, then donot call the database
+                if (!valid) {       
+                    invalidFormat.push({
+                        _id: products[index].productID,
+                        errMsg: 'Product at index ' + index + ' is invalid: ' + validate.errors[0].message
+                    })
+                    --reqProcessed;
+                    
+                    if (reqProcessed == 0) {  //all request processed
+                        let msg = {
+                            "updated": updated,
+                            "notFound": notFound,
+                            "cannotUpdate": cannotUpdate,
+                            "invalidFormat": invalidFormat
+                        };
+                
+                        console.log(msg)
+                        res.status(400).send(msg);
+                    }
+
+                    continue;
+                }
+
+                
+                //Make the query
+                let query = { _id: products[index].productID } 
+                delete products[index]["productID"]     //since _id cannot be updated
+                newVal = { $set: products[index] }
+
+                //updating every single product
                 db.collection("Products").updateOne(query, newVal, (error, response) => {
-                    if (error || response.matchedCount == 0) { 
-                        console.log('Document does not exist')
+                    if (error) cannotUpdate.push(query._id)
+                    else if (response.matchedCount == 0) notFound.push(query._id)
+                    else updated.push(query._id)
+
+                    --reqProcessed
+
+                    if (reqProcessed == 0) {  //all callbacks have invoked
+                        let msg = {
+                            "updated": updated,
+                            "notFound": notFound,
+                            "cannotUpdate": cannotUpdate,
+                            "invalidFormat": invalidFormat
+                        };
+                
+                        console.log(msg)
+                        res.status(200).send(msg);
                     }
                 });
-            })
-        }
+            }
+        })
         
-        console.log("Document updated");
-        res.sendStatus(200)
     }
 }

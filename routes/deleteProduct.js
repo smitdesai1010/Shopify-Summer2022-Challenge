@@ -6,7 +6,7 @@ module.exports = {
         query = {}
 
         if (req.params.id != undefined) {
-            if (!Number.isInteger(req.params.id)) {
+            if (!Number.isInteger(parseInt(req.params.id))) {
                 res.status(400).send("Invalid ID")
                 return
             }
