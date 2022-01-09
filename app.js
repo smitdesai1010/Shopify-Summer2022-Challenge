@@ -5,6 +5,7 @@ const addProduct = require('./routes/addProduct.js')
 const viewProduct = require('./routes/viewProduct.js')
 const updateProduct = require('./routes/updateProduct.js')
 const deleteProduct = require('./routes/deleteProduct.js')
+const getCSV = require('./routes/getCSV.js')
 
 const app = express();
 const PORT = process.env.PORT || 4500;
@@ -27,8 +28,10 @@ app.delete('/product', deleteProduct.delete)
 app.delete('/product/:id', deleteProduct.delete)
 
 //CSV
-// app.get('/product/csv', )
-// app.get('/product/csv/:id',)
+app.get('/product2csv', getCSV.CSV)
+app.get('/product2csv/:id', getCSV.CSV)
+
+
 
 app.all('*',(req,res) => {
     res.send('This is a invalid route');
