@@ -3,69 +3,69 @@
         "productID": 1234,
         "productName": "Apple",
         "productPrice": 2.5,
-        "ProductQty": 120
+        "productQty": 120
     },
 
     {
         "productID": 4321,
         "productName": "TV",
         "productPrice": 2000,
-        "ProductQty": 793
+        "productQty": 793
     },
 
     {
         "productID": 1111,
         "productName": "Laptop",
         "productPrice": 1500,
-        "ProductQty": 624
+        "productQty": 624
     },
 
     {
         "productID": 2222,
         "productName": "Computer",
         "productPrice": 3000,
-        "ProductQty": 2534
+        "productQty": 2534
     },
 
     {
         "productID": 5555,
         "productName": "Apple 13 Pro Max",
         "productPrice": 1200.50,
-        "ProductQty": 432
+        "productQty": 432
     },
 
     {
         "productID": 8888,
         "productName": "Cloth bag",
         "productPrice": 0.89,
-        "ProductQty": 24
+        "productQty": 24
     },
 
     {
         "productID": 9999,
         "productName": "Galaxy buds pro",
         "productPrice": 189.5,
-        "ProductQty": 634
+        "productQty": 634
     },
 
     {
         "productID": 0,
         "productName": "Cricket bat",
         "productPrice": 45,
-        "ProductQty": 32
+        "productQty": 32
     },
 
     {
         "productID": 6789,
         "productName": "Yoga mat",
         "productPrice": 5.534,
-        "ProductQty": 12
+        "productQty": 12
     },
 
     {
         "productID": 1010,
         "productName": "BMW i8",
         "productPrice": 346346,
-        "ProductQty": 45678
+        "productQty": 45678
     }
 ]

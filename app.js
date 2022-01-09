@@ -16,15 +16,15 @@ app.use(express.json())
 app.post('/product', addProduct.add)
 
 //Read
-app.get('/product', viewProduct.viewAll)
-app.get('/product/:id', viewProduct.viewOne)
+app.get('/product', viewProduct.view)
+app.get('/product/:id', viewProduct.view)
 
 //Update
 app.put('/product', updateProduct.update)
 
 //Delete
-app.delete('/product', deleteProduct.deleteAll)
-app.delete('/product/:id', deleteProduct.deleteOne)
+app.delete('/product', deleteProduct.delete)
+app.delete('/product/:id', deleteProduct.delete)
 
 //CSV
 // app.get('/product/csv', )

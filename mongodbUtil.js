@@ -17,15 +17,27 @@ module.exports = {
     });
   }),
 
-  documentSchema: {
+  addDocumentSchema: {
     type: "object",
     properties: {
       productID: {type: "integer"},
       productName: {type: "string"},
       productPrice: {type: "number"},
-      ProductQty: {type: "integer"}
+      productQty: {type: "integer"}
     },
-    required: ["productID","productName","productPrice","ProductQty"],
+    required: ["productID","productName","productPrice","productQty"],
+    additionalProperties: false,
+  },
+
+  updateDocumentSchema: {
+    type: "object",
+    properties: {
+      productID: {type: "integer"},
+      productName: {type: "string"},
+      productPrice: {type: "number"},
+      productQty: {type: "integer"}
+    },
+    required: ["productID"],
     additionalProperties: false,
   }
 }

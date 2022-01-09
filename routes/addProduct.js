@@ -3,16 +3,15 @@ const Ajv = require('ajv')
 const ajv = new Ajv()
 
 module.exports = {
-    add: async (req, res) => {
+    add: (req, res) => {
         let products = req.body
-        const db = await mongodbUtil.getConnection    
 
         if (!(products.constructor === Array)) {
             products = [products]
         }
 
         for (let index = 0; index < products.length; ++index) {
-            const validate = ajv.compile(mongodbUtil.documentSchema)
+            const validate = ajv.compile(mongodbUtil.addDocumentSchema)
             const valid = validate(products[index])
 
             if (!valid) { 
@@ -27,21 +26,28 @@ module.exports = {
             delete products[index]["productID"]
         }
 
-        db.collection("Products").insertMany(products, (error, response) => {
-            if (error) {
-                if (error.code == 11000) {
-                    let errMsg = "Duplicate entry on productID: " + JSON.stringify(error.writeErrors[0].err.op) + '\nFollow up product details are not inserted into the database'
-                    console.log(errMsg)
-                    res.status(409).send(errMsg)
+        //Get Mongodb connection and add the products
+        mongodbUtil.getConnection 
+        .then (db => {
+            db.collection("Products").insertMany(products, (error, response) => {
+                if (error) {
+                    if (error.code == 11000) {
+                        let errMsg = "Duplicate entry on productID: " + JSON.stringify(error.writeErrors[0].err.op) + '\nFollow up product details are not inserted into the database'
+                        console.log(errMsg)
+                        res.status(409).send(errMsg)
+                    }
+    
+                    else {
+                        res.status(400).send('Unable to insert into Database, please try again later')
+                    }
                 }
-
+    
                 else {
-                    res.status(400).send('Unable to insert into Database, please try again later')
+                    console.log("Document inserted");
+                    res.sendStatus(200)
                 }
-            }
-
-            else console.log("Document inserted");
-        });
+            });    
+        })   
 
     }
 }
