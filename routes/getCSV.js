@@ -41,15 +41,15 @@ module.exports = {
             db.collection("Products").find(query).toArray(function(error, result) {
                if (error) {
                     console.log(error);
-                    res.status(400).send("Error in retrieving data, please try again later");
+                    res.status(500).send("Error in retrieving data, please try again later");
                }
 
                else {
-                   if (result.length == 0) res.sendStatus(404) //no matching result found
+                    if (result.length == 0) res.sendStatus(404) //no matching result found
 
                    else {
-                    const csv = json2csvParser.parse(result);
-                    res.status(200).send(csv) 
+                        const csv = json2csvParser.parse(result);
+                        res.status(200).send(csv) 
                    }
                }
             })   

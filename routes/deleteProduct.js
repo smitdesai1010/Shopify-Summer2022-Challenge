@@ -22,7 +22,7 @@ module.exports = {
 
                if (error) {
                     console.log(error);
-                    res.status(400).send("Error in deleting, please try again later");
+                    res.status(500).send("Error in deleting, please try again later");
                }
 
                else {

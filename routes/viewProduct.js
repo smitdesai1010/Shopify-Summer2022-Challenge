@@ -21,7 +21,7 @@ module.exports = {
             db.collection("Products").find(query).toArray(function(error, result) {
                if (error) {
                     console.log(error);
-                    res.status(400).send("Error in retrieving data, please try again later");
+                    res.status(500).send("Error in retrieving data, please try again later");
                }
 
                else {
