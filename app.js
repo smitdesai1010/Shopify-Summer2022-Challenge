@@ -22,10 +22,8 @@ app.use((err, req, res, next) => {
     }
 })
 
-// Add a big Try catch block
 // make sure add n update res doesn't fail
 // make repo public
-// Specify return types
 
 //Create
 app.post('/product', addProduct.add)

@@ -37,6 +37,7 @@ module.exports = {
                             "invalidFormat": invalidFormat
                         }
                         console.log(msg)
+                        res.set('Content-Type', 'application/json')
                         res.status(400).send(msg);
                     }
 
@@ -66,12 +67,18 @@ module.exports = {
                         }
     
                         console.log(msg)
+                        res.set('Content-Type', 'application/json')
                         res.status(200).send(msg)
                     }
                 });    
             
             }
-        })   
+        })
+        .catch(err => {
+            console.log('Error in getting connection: ', err)
+            res.set('Content-Type', 'text/plain')
+            res.status(500).send('Please view server logs for more details')        
+        })  
 
     }
 }
