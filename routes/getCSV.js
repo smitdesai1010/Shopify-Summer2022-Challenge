@@ -1,12 +1,32 @@
 const mongodbUtil = require('../mongodbUtil.js')
 const { Parser } = require('json2csv');
-const json2csvParser = new Parser();
+
+const fields = [ 
+    {
+        label: "ID",
+        value: "_id"
+    }, {
+        label: "Name",
+        value: "productName"
+    }, {
+        label: "Price",
+        value: "productPrice"
+    }, {
+        label: "Quantity",
+        value: "productQty"
+    }
+]
+
+const json2csvParser = new Parser({ fields });
+
 
 module.exports = {
     CSV: (req, res) => {
 
         query = {}
 
+        //check if id is present or not, if not, send back all results
+        //check if id is valid or not, if not, return 400: bad request
         if (req.params.id != undefined) {
             if (!Number.isInteger(parseInt(req.params.id))) {
                 res.status(400).send("Invalid ID")
@@ -25,14 +45,14 @@ module.exports = {
                }
 
                else {
-                   if (result.length == 0) res.sendStatus(404)
+                   if (result.length == 0) res.sendStatus(404) //no matching result found
 
                    else {
                     const csv = json2csvParser.parse(result);
                     res.status(200).send(csv) 
                    }
                }
-              })   
+            })   
         })   
     }
 }

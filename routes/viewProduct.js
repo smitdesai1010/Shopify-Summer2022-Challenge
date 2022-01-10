@@ -5,6 +5,8 @@ module.exports = {
 
         query = {}
 
+        //check if id is present or not, if not, send back all results
+        //check if id is valid or not, if not, return 400: bad request
         if (req.params.id != undefined) {
             if (!Number.isInteger(parseInt(req.params.id))) {
                 res.status(400).send("Invalid ID")
@@ -23,10 +25,10 @@ module.exports = {
                }
 
                else {
-                   if (result.length == 0) res.sendStatus(404)
+                   if (result.length == 0) res.sendStatus(404)  //no matching result found
                    else res.status(200).send(result) 
                }
-              })   
+            })   
         })   
     }
 }

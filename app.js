@@ -10,8 +10,17 @@ const getCSV = require('./routes/getCSV.js')
 const app = express();
 const PORT = process.env.PORT || 4500;
 
-//what if users uploads a string ?
+//if users uploads a string invalid data format
 app.use(express.json())
+app.use((err, req, res, next) => {
+    if (err) {
+      console.log('Invalid Request data')
+      res.status(400).send('Invalid Request data')
+    } 
+    else {
+      next()
+    }
+})
 
 //Create
 app.post('/product', addProduct.add)
