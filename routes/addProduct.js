@@ -31,12 +31,11 @@ module.exports = {
                     --reqProcessed;
                     if (reqProcessed == 0) {  //all callbacks have invoked
                         let msg = {
-                            "updated": updated,
-                            "notFound": notFound,
-                            "cannotUpdate": cannotUpdate,
+                            "inserted": insertedEntries,
+                            "cannotInsert": cannotInsert,
+                            "duplicateInsertion": duplicateInsertion,
                             "invalidFormat": invalidFormat
-                        };
-                
+                        }
                         console.log(msg)
                         res.status(400).send(msg);
                     }

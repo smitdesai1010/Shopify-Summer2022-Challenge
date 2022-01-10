@@ -35,6 +35,149 @@ npm start
 
 Results: 
 
+<details>
+  <summary>CREATE</summary>
+  <br>
+
+  ```
+  curl -X POST http://localhost:4500/product/ -d  [{"productID":1234,"productName":"Apple"},{"productID":4321,"productName":"TV","productPrice":2000,"productQty":793,"Smit":123},{"productID":1111,"productName":"Laptop","productPrice":1500,"productQty":624},{"productID":2222,"productName":"Computer","productPrice":3000,"productQty":2534},{"productID":5555,"productName":"Apple 13 Pro Max","productPrice":1200.5,"productQty":432},{"productID":"asd888asd8","productName":"Cloth bag","productPrice":0.89,"productQty":24},{"productID":9999,"productName":"Galaxy buds pro","productPrice":189.5,"productQty":634},{"productID":0,"productName":"Cricket bat","productPrice":45,"productQty":32},{"productID":6789,"productName":"Yoga mat","productPrice":5.534,"productQty":12},{"productID":1010,"productName":"BMW i8","productPrice":346346,"productQty":45678}]
+
+
+  {
+    "inserted": [
+        1111,
+        5555,
+        2222
+    ],
+    "cannotInsert": [],
+    "duplicateInsertion": [
+        9999,
+        0,
+        1010,
+        6789
+    ],
+    "invalidFormat": [
+        {
+            "_id": 1234,
+            "errMsg": "Product at index 0 is invalid: must have required property 'productPrice'"
+        },
+        {
+            "_id": 4321,
+            "errMsg": "Product at index 1 is invalid: must NOT have additional properties"
+        },
+        {
+            "_id": "asd888asd8",
+            "errMsg": "Product at index 5 is invalid: must be integer"
+        }
+    ]
+  }
+  ```
+
+</details>
+
+<details>
+  <summary>READ</summary>
+  <br>
+
+  ```
+  curl -X GET http://localhost:4500/product/4321
+
+  [
+    {
+        "_id": 4321,
+        "productName": "TV",
+        "productPrice": 2000,
+        "productQty": 793
+    }
+  ]
+  ```
+
+  ```
+  curl -X GET http://localhost:4500/product/
+
+  [{"_id":4321,"productName":"TV","productPrice":2000,"productQty":793},{"_id":8888,"productName":"Cloth bag","productPrice":0.89,"productQty":24},{"_id":23,"productName":"Cricket bat","productPrice":45,"productQty":32},{"_id":1010,"productName":"BMW i8","productPrice":346346,"productQty":45678}]
+  ```
+
+</details>
+
+<details>
+  <summary>UPDATE</summary>
+  <br>
+
+  ```
+  curl -X POST http://localhost:4500/product/ -d [{"productID":1234,"productName":"Apple"},{"productID":4321,"productName":"TV","productPrice":2000,"productQty":793,"Smit":123},{"productID":"qwe1111123","productName":"Laptop","productPrice":1500,"productQty":624},{"productID":2222,"productName":"PC","productPrice":3000,"productQty":2534},{"productID":5555,"productName":"Apple 13 Pro Max","productPrice":10.5,"productQty":432},{"productID":"asd888asd8","productName":"Cloth bag","productPrice":0.89,"productQty":24},{"productID":9999,"productName":"Galaxy buds pro","productPrice":189.5,"productQty":634123}]
+  
+  {
+    "updated": [
+        1234,
+        2222,
+        5555,
+        9999
+    ],
+    "notFound": [],
+    "cannotUpdate": [],
+    "invalidFormat": [
+        {
+            "_id": 4321,
+            "errMsg": "Product at index 1 is invalid: must NOT have additional properties"
+        },
+        {
+            "_id": "qwe1111123",
+            "errMsg": "Product at index 2 is invalid: must be integer"
+        },
+        {
+            "_id": "asd888asd8",
+            "errMsg": "Product at index 5 is invalid: must be integer"
+        }
+    ]
+  } 
+  
+  ```
+</details>
+
+
+<details>
+  <summary>DELETE</summary>
+  <br>
+
+  ```
+  curl -X DELETE http://localhost:4500/product/4321
+
+  "1 products deleted"
+  ```
+
+  ```
+  curl -X DELETE http://localhost:4500/product/
+  "3 products deleted"
+  ```
+
+</details>
+
+<details>
+  <summary>CSV</summary>
+  <br>
+
+  ```
+  curl -X GET http://localhost:4500/product2csv/4321
+
+  "ID","Name","Price","Quantity"
+  4321,"TV",2000,793
+  ```
+
+  ```
+  curl -X GET http://localhost:4500/product2csv/
+
+  "ID","Name","Price","Quantity"
+  4321,"TV",2000,793
+  8888,"Cloth bag",0.89,24
+  23,"Cricket bat",45,32
+  1010,"BMW i8",346346,45678
+  ```
+
+</details>
+
+
+
 Note: 
 - The database contains 10 records, check 'Assets\products.json' file for product details
 - Structure of products stored in inventory: 
@@ -85,7 +228,7 @@ Possible Errors:
 | URL | METHOD | BODY | RETURN | DESCRIPTION |
 |-----|--------|------|--------|-------------|
 |/product       | GET | None | Array of JSON | Details of every product |
-|/product/:id   | GET | None | JSON          | Details of requested product |
+|/product/:id   | GET | None | Array of JSON | Details of requested product |
 
 Possible Errors: 
 - 400: "Invalid Request data" (if above given syntax is not followed)
@@ -130,8 +273,8 @@ Possible Errors:
 
 | URL | METHOD | BODY | RETURN | DESCRIPTION |
 |-----|--------|------|--------|-------------|
-|/product       | DELETE | None | None | Deletes every product |
-|/product/:id   | DELETE | None | None | Deletes requested product |
+|/product       | DELETE | None | String | Deletes every product; returns the number of products deleted|
+|/product/:id   | DELETE | None | String | Deletes requested product; returns the number of products deleted| |
 
 Possible Errors: 
 - 400: "Invalid Request data" (if above given syntax is not followed)
@@ -147,8 +290,8 @@ Possible Errors:
 
 | URL | METHOD | BODY | RETURN | DESCRIPTION |
 |-----|--------|------|--------|-------------|
-|/product       | GET | None | String of CSV | CSV of every product |
-|/product/:id   | GET | None | String of CSV | CSV of requested product |
+|/product2csv       | GET | None | String of CSV | CSV of every product |
+|/product2csv/:id   | GET | None | String of CSV | CSV of requested product |
 
 Possible Errors: 
 - 400: "Invalid Request data" (if above given syntax is not followed)
