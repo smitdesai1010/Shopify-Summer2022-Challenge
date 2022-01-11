@@ -1,8 +1,7 @@
 const { MongoClient } = require('mongodb');
-const uri = "mongodb+srv://smit1010:"+process.env.MONGODB_PASSWORD+"@cluster0.u7uth.mongodb.net/Shopify-Inventory?retryWrites=true&w=majority";
+const uri = "mongodb+srv://smit1010:FdwN6ePA732KddwU@cluster0.u7uth.mongodb.net/Shopify-Inventory?retryWrites=true&w=majority";
 
 let database = null;
-
 
 module.exports = {
   getConnection: new Promise((resolve, reject) => {

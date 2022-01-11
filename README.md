@@ -1,6 +1,6 @@
 # Shopify-Summer2022-Challenge
 
-[Read]() challenge description.
+[Read](https://github.com/smitdesai1010/Shopify-Summer2022-Challenge/blob/main/Assets/Shopify%20Backend%20Developer%20Intern%20Challenge%20-%20Summer%202022.pdf) challenge description.
 Additional feature: Push a button export product data to a CSV
 
 
@@ -215,6 +215,47 @@ Schema:
 }
 ```
 
+Example: 
+```
+[
+    {
+        "productID": 1234,
+        "productName": "Apple",
+        "productPrice": 2.5,
+        "productQty": 120
+    },
+
+    {
+        "productID": 4321,
+        "productName": "TV",
+        "productPrice": 2000,
+        "productQty": 793
+    },
+]
+```
+
+
+Return: 
+```
+ {
+    "inserted": [],
+    "cannotInsert": [],
+    "duplicateInsertion": [],
+    "invalidFormat": [
+        {
+            "_id":
+            "errMsg": 
+        }
+    ]
+  }
+
+  inserted: List of ProductIDs that were sucessfully inserted
+  cannotInsert: List of ProductIDs that couldn't be inserted due to server error
+  duplicateInsertion: List of ProductIDs that were already inserted into the database
+  invalidFormat: List of ProductIDs that had invalidFormat
+```
+
+
 Possible Errors: 
 - 400: "Invalid Request data" (if above given syntax is not followed)
 - View the returned object for more information
@@ -259,6 +300,43 @@ Schema:
     required: ["productID"],
     additionalProperties: false,
 }
+```
+
+Example: 
+```
+[
+    {
+        "productID": 1234,
+        "productName": "Red Fruit",
+        "productQty": 90
+    },
+
+    {
+        "productID": 4321,
+        "productQty": 1234
+    },
+]
+```
+
+
+Return: 
+```
+  {
+    "updated": [],                 
+    "notFound": [],
+    "cannotUpdate": [],
+    "invalidFormat": [
+        {
+            "_id":
+            "errMsg": 
+        }
+    ]
+  }
+
+  Updated: List of ProductIDs that were sucessfully updated
+  notFound: List of ProductIDs that were not found
+  cannotUpdate: List of ProductIDs that couldn't be updated due to server error
+  invalidFormat: List of ProductIDs that had invalidFormat
 ```
 
 

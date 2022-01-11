@@ -1,5 +1,3 @@
-require('dotenv').config({path:'.env'})
-
 const express = require('express');
 const addProduct = require('./routes/addProduct.js')
 const viewProduct = require('./routes/viewProduct.js')
@@ -21,9 +19,6 @@ app.use((err, req, res, next) => {
       next()
     }
 })
-
-// make sure add n update res doesn't fail
-// make repo public
 
 //Create
 app.post('/product', addProduct.add)

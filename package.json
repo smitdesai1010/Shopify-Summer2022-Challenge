@@ -1,0 +1,29 @@
+{
+  "name": "shopify-summer2022-challenge",
+  "version": "1.0.0",
+  "description": "[Read](https://github.com/smitdesai1010/Shopify-Summer2022-Challenge/blob/main/Assets/Shopify%20Backend%20Developer%20Intern%20Challenge%20-%20Summer%202022.pdf) challenge description.\r Additional feature: Push a button export product data to a CSV",
+  "main": "app.js",
+  "dependencies": {
+    "ajv": "^8.8.2",
+    "express": "^4.17.2",
+    "image-thumbnail": "^1.0.14",
+    "json2csv": "^5.0.6",
+    "mongodb": "^4.3.0",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smitdesai1010/Shopify-Summer2022-Challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smitdesai1010/Shopify-Summer2022-Challenge/issues"
+  },
+  "homepage": "https://github.com/smitdesai1010/Shopify-Summer2022-Challenge#readme"
+}
