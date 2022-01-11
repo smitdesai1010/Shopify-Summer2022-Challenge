@@ -6,6 +6,22 @@ Additional feature: Push a button export product data to a CSV
 
 Technologies used: Node.js, Express.js, Mongodb, POSTMAN, git, heroku
 
+## Heroku Hosted Server
+
+https://shopify-is-awesome.herokuapp.com/
+
+Note: 
+- The production database contains 10 records, check 'Assets\products.json' file for product details
+- Structure of products stored in inventory: 
+```
+{
+    productID: {type: "integer"},
+    productName: {type: "string"},
+    productPrice: {type: "float"},
+    productQty: {type: "integer"}
+}
+```
+
 
 ## Run Locally
 
@@ -27,13 +43,19 @@ npm install
 npm start   
 ```
 
+Once the program is running, go to http://localhost:4500/
+
 ## How to use
 
-- Once the program is running, go to http://localhost:4500/
+- Go to the server URL 
+  - If you are using locally, go to http://localhost:4500/
+  - If you are using the heroku hosted server, go to https://shopify-is-awesome.herokuapp.com/
 - Use curl, Postman or any other API testing software to interact with the server
-- Please view API Documentation (below) for more details
+- Please view [API Documentation](https://github.com/smitdesai1010/Shopify-Summer2022-Challenge#api-documentation) for more details
 
-Results: 
+## Results
+
+Note: These results are tested locally and may differ since they were tested using the development database.
 
 <details>
   <summary>CREATE</summary>
@@ -177,18 +199,6 @@ Results:
 </details>
 
 
-
-Note: 
-- The database contains 10 records, check 'Assets\products.json' file for product details
-- Structure of products stored in inventory: 
-```
-{
-    productID: {type: "integer"},
-    productName: {type: "string"},
-    productPrice: {type: "float"},
-    productQty: {type: "integer"}
-}
-```
  
 ## API Documentation
 
