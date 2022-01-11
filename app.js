@@ -41,7 +41,7 @@ app.get('/product2csv/:id', getCSV.CSV)
 
 
 app.all('*',(req,res) => {
-    res.send('This is a invalid route');
+    res.sendFile(__dirname + '/Assets/index.html');
 })
 
 app.listen(PORT, () => console.log('Server connected at:', `localhost:${PORT}`));

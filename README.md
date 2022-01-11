@@ -55,14 +55,14 @@ Once the program is running, go to http://localhost:4500/
 
 ## Results
 
-Note: These results are tested locally and may differ since they were tested using the development database.
+Note: These results are tested on Windows locally and may differ as they are tested using the development database.
 
 <details>
   <summary>CREATE</summary>
   <br>
 
   ```
-  curl -X POST http://localhost:4500/product/ -d  [{"productID":1234,"productName":"Apple"},{"productID":4321,"productName":"TV","productPrice":2000,"productQty":793,"Smit":123},{"productID":1111,"productName":"Laptop","productPrice":1500,"productQty":624},{"productID":2222,"productName":"Computer","productPrice":3000,"productQty":2534},{"productID":5555,"productName":"Apple 13 Pro Max","productPrice":1200.5,"productQty":432},{"productID":"asd888asd8","productName":"Cloth bag","productPrice":0.89,"productQty":24},{"productID":9999,"productName":"Galaxy buds pro","productPrice":189.5,"productQty":634},{"productID":0,"productName":"Cricket bat","productPrice":45,"productQty":32},{"productID":6789,"productName":"Yoga mat","productPrice":5.534,"productQty":12},{"productID":1010,"productName":"BMW i8","productPrice":346346,"productQty":45678}]
+  curl -X POST http://localhost:4500/product/  -H "Content-Type: application/json" -d "[{\"productID\":1234,\"productName\":\"Apple\"},{\"productID\":4321,\"productName\":\"TV\",\"productPrice\":2000,\"productQty\":793,\"Smit\":123},{\"productID\":1111,\"productName\":\"Laptop\",\"productPrice\":1500,\"productQty\":624},{\"productID\":2222,\"productName\":\"Computer\",\"productPrice\":3000,\"productQty\":2534},{\"productID\":5555,\"productName\":\"Apple 13 Pro Max\",\"productPrice\":1200.5,\"productQty\":432},{\"productID\":\"asd888asd8\",\"productName\":\"Cloth bag\",\"productPrice\":0.89,\"productQty\":24},{\"productID\":9999,\"productName\":\"Galaxy buds pro\",\"productPrice\":189.5,\"productQty\":634},{\"productID\":0,\"productName\":\"Cricket bat\",\"productPrice\":45,\"productQty\":32},{\"productID\":6789,\"productName\":\"Yoga mat\",\"productPrice\":5.534,\"productQty\":12},{\"productID\":1010,\"productName\":\"BMW i8\",\"productPrice\":346346,\"productQty\":45678}]"
 
 
   {
@@ -127,7 +127,7 @@ Note: These results are tested locally and may differ since they were tested usi
   <br>
 
   ```
-  curl -X POST http://localhost:4500/product/ -d [{"productID":1234,"productName":"Apple"},{"productID":4321,"productName":"TV","productPrice":2000,"productQty":793,"Smit":123},{"productID":"qwe1111123","productName":"Laptop","productPrice":1500,"productQty":624},{"productID":2222,"productName":"PC","productPrice":3000,"productQty":2534},{"productID":5555,"productName":"Apple 13 Pro Max","productPrice":10.5,"productQty":432},{"productID":"asd888asd8","productName":"Cloth bag","productPrice":0.89,"productQty":24},{"productID":9999,"productName":"Galaxy buds pro","productPrice":189.5,"productQty":634123}]
+  curl -X POST http://localhost:4500/product/ -H "Content-Type: application/json" -d "[{\"productID\":1234,\"productName\":\"Apple\"},{\"productID\":4321,\"productName\":\"TV\",\"productPrice\":2000,\"productQty\":793,\"Smit\":123},{\"productID\":\"qwe1111123\",\"productName\":\"Laptop\",\"productPrice\":1500,\"productQty\":624},{\"productID\":2222,\"productName\":\"PC\",\"productPrice\":3000,\"productQty\":2534},{\"productID\":5555,\"productName\":\"Apple 13 Pro Max\",\"productPrice\":10.5,\"productQty\":432},{\"productID\":\"asd888asd8\",\"productName\":\"Cloth bag\",\"productPrice\":0.89,\"productQty\":24},{\"productID\":9999,\"productName\":\"Galaxy buds pro\",\"productPrice\":189.5,\"productQty\":634123}]"
   
   {
     "updated": [
