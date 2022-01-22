@@ -15,10 +15,10 @@ Note:
 - Structure of products stored in inventory: 
 ```
 {
-    productID: {type: "integer"},
-    productName: {type: "string"},
+    productID:    {type: "integer"},
+    productName:  {type: "string"},
     productPrice: {type: "float"},
-    productQty: {type: "integer"}
+    productQty:   {type: "integer"}
 }
 ```
 
