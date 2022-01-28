@@ -15,10 +15,10 @@ Note:
 - Structure of products stored in inventory: 
 ```
 {
-    productID:    {type: "integer"},
-    productName:  {type: "string"},
-    productPrice: {type: "float"},
-    productQty:   {type: "integer"}
+      productID:    {type: "integer", maximum: 1000000, exclusiveMinimum: 0},
+      productName:  {type: "string", minLength: 2, maxLength: 100},
+      productPrice: {type: "number", maximum: 1000000, exclusiveMinimum: 0},
+      productQty:   {type: "integer", maximum: 5000, minimum: 0}
 }
 ```
 
