@@ -49,4 +49,6 @@ module.exports = {
     productPrice
     ProductQty
   }
+
+  https://ajv.js.org/json-schema.html#keywords-for-numbers
 */
